@@ -293,10 +293,13 @@ def decode(args: Dict[str, str]):
     if args['--cuda']:
         model = model.to(torch.device("cuda:0"))
 
+    start_time = time.time()
     hypotheses = beam_search(model, test_data_src,
-                            #  beam_size=int(args['--beam-size']),                      
-                             beam_size=10,
+                             beam_size=int(args['--beam-size']),                      
+                            #  beam_size=10,
                              max_decoding_time_step=int(args['--max-decoding-time-step']))
+    exec_time = time.time() - start_time
+    print('Decoding time: {} sec'.format(exec_time), file=sys.stderr)
 
     if args['TEST_TARGET_FILE']:
         top_hypotheses = [hyps[0] for hyps in hypotheses]
@@ -304,6 +307,8 @@ def decode(args: Dict[str, str]):
         print('Corpus BLEU: {}'.format(bleu_score), file=sys.stderr)
 
     with open(args['OUTPUT_FILE'], 'w') as f:
+        f.write('Decoding time: {} sec\n'.format(exec_time))
+        f.write('Corpus BLEU: {}\n'.format(bleu_score))
         for src_sent, hyps in zip(test_data_src, hypotheses):
             top_hyp = hyps[0]
             hyp_sent = ''.join(top_hyp.value).replace('▁', ' ')
