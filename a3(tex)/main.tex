@@ -98,7 +98,6 @@
 \section{Instructions}
 \begin{itemize}
 \item Total score cannot exceed 100 points. For example, if you score 98 points from non-bonus questions and 3 points are added from bonus questions, your score will be 100 points, not 101 points.
-% \item You can download the skeleton code file and TeX file \href{https://github.com/yc-song/gsds-nlp-assignment-2/main}{HERE} 
 \item Skeleton codes for problem 2 and 3 are at the directory \texttt{/q2} and \texttt{/q3} each. Problem 1 does not have coding problems. 
 \item Run the \texttt{bash collect\_submission.sh} script to produce your 2000\_00000\_coding.zip file. Please make sure to modify collect\_sumbssion.sh file before running this command. (\textbf{2000\_00000} stands for your student id)
 \item Modify this tex file into \texttt{2000\_00000\_written.pdf} with your written solutions
@@ -113,7 +112,7 @@ For each of the following tasks, state how you would run RNN to do that task. In
 \begin{itemize}
     \item How many outputs i.e. number of times the softmax $\hat{y}^{(t)}$ is called from your RNN. If the number of outputs is not fixed, state it as arbitrary.  
     \item What each $\hat{y}^{(t)}$ is a probability distribution over (e.g. distributed over all species of categories)
-    \item Which inputs are fed at each time step to produce each output $\hat{y}^{(t)}$
+    \item Which inputs are fed to produce each output $\hat{y}^{(t)}$
     \end{itemize}
 The inputs for each of the tasks are specified below.
 \begin{enumerate}[label=(\alph*)]
@@ -135,9 +134,8 @@ The inputs for each of the tasks are specified below.
 \section{Topic Classfication with RNN (35 pts)}
 
 In this assignment, we will implement RNN model for topic classification task using AG news dataset. Topic classification is a task that involves classifying text into different categories or subjects.\\
-For this question, please update the given jupyter notebook file in /q2 directory and submit it along with your answer to this latex file. Please note that this assignment is built and tested under Google Colaboratory. If you work on a local machine, you need to handle version issue on your own. 
+For this question, please update the given jupyter notebook file \textbf{(q2/topicClassification.ipynb)} and submit it along with your answer to this latex file. Please note that this assignment is built and tested under Google Colaboratory with \textbf{T4 GPU }(available for free). If you work on a local machine, you need to handle version issue on your own. 
 
-%\subsection{Implementing an RNN model with PyTorch (30 pts)}
 \subsection{Implementing an RNN model with PyTorch (15 pts)}
 In this question, we are going to implement a SimpleRNN class to classify AG news dataset. Complete the code following the instruction in the jupyter notebook file.
 \begin{enumerate}[label=(\alph*)]
@@ -219,10 +217,12 @@ Here, $\theta$ represents all the parameters of the model and $J_t(\theta)$ is t
 Now that we have described the model, let's try implementing it for Jeju dialect to Korean translation!
 
 \subsection{Setting up Virtual Environment}
-In this part, we will set up a virtual environment for implementing the NMT machine. Before you begin, make sure to read instructions about using GSDS cluster on the ETL board. Run the following commands within the assignment directory (\texttt{a2}) to create the appropriate conda environment. This guarantees that you have all the necessary packages to complete the assignment. You will be asked to implement LSTM cells and the seq2seq model using the PyTorch package. 
+In this part, we will set up a virtual environment for implementing the NMT machine. Before you begin, make sure to read instructions about using GSDS cluster on the ETL board. Run the following commands within the assignment directory (\texttt{a3}) to create the appropriate conda environment. This guarantees that you have all the necessary packages to complete the assignment. You will be asked to implement LSTM cells and the seq2seq model using the PyTorch package. 
 \begin{minted}{bash}
+    conda create -n a3q3
+    conda activate a3q3
     bash env.sh
-    conda activate a2
+    conda activate a3q3
 \end{minted}
 
 
@@ -292,10 +292,10 @@ In this part, we will set up a virtual environment for implementing the NMT mach
     \begin{enumerate}[label=(\roman*)]
         \item Consider this example.
         \begin{itemize}
-\item        Source Sentence $\mathbf{s}$: \textbf{그때는 뭐 사먹을 것도 엇일 때고 주로 뭐 학습장이나 작기장이나 사던지 그렇게 헤엇던 거 가따} 
-      \item  Reference Translation $\mathbf{r}_1$: 그때는 뭐 사먹을 것도 없을 때고 주로 뭐 학습장이나 종합장이나 사던지 그렇게 했었던 거 같아 
-        \item Reference Translation $\mathbf{r}_2$: 그때는 뭐 사먹을 것도 없을 시절이고 주로 뭐 학습장이나 잡기장이나 사든지 그렇게 했었던 거 같다 
-        \item NMT Translation $\mathbf{c}_1$: 그때는 뭐 사먹을 것도 없을 때고 주로 뭐 학습장이나 작기장이나 사든지 그렇게 했었던 거 가
+\item        Source Sentence $\mathbf{s}$: \textbf{그때는 뭐 사먹을 것도 엇일 때고 학습장이나 사던지 헤엇던 거 가따} 
+      \item  Reference Translation $\mathbf{r}_1$: 그때는 뭐 사먹을 것도 없을 때고 학습장이나 사던지 했었던 거 같아 
+        \item Reference Translation $\mathbf{r}_2$: 그때는 뭐 사먹을 것도 없을 시절이고 학습장이나 사든지 했었던 거 같다 
+        \item NMT Translation $\mathbf{c}_1$: 그때는 뭐 사먹을 것도 없을 때고 학습장이나 사든지 했었던 거 가
     \end{itemize}
 
     Please compute the BLEU scores for $\mathbf{c}_1$. Let $\lambda_i=0.5$ for $i\in\{1,2\}$ and $\lambda_i=0$ for $i\in\{3,4\}$ (\textbf{this means we ignore 3-grams and 4-grams}, i.e., don't compute $p_3$ or $p_4$). When computing BLEU scores, show your working (i.e., show your computed values for $p_1$, $p_2$, $len(c)$, $len(r)$ and $BP$). Note that the BLEU scores can be expressed between 0 and 1 or between 0 and 100. The code is using the 0 to 100 scale while in this question we are using the \textbf{0 to 1} scale. \textbf{(7 pts)}
@@ -306,101 +306,4 @@ In this part, we will set up a virtual environment for implementing the NMT mach
     \end{answer}
 \end{enumerate}
 \end{enumerate}
-
-% \subsection{Written Questions}
-% \begin{enumerate}[label=(\alph*)]
-% \item The alphabet 、(\textit{araea} (아래아)), which are not used in contemporary Korean, is frequently used in jeju dialect. Because of this, conventional preprocessing tools for Korean may cause problems. Analyze \texttt{vocab.py} and state how the skeleton code fixed up the issue. \textbf{(3 pts)}
-% %%%Write answer here
-% \begin{answer}
-% \end{answer}
-
-% \item  \textbf{(Bonus)} As you can see in \texttt{vocab.py}, we modeled our NMT problem at a subword-level. That is, given a sentence in the source language, we looked up subword components from an embeddings matrix. Alternatively, we could have modeled the NMT problem at the word-level, by looking up whole words from the embeddings matrix. Why might it be important to model our Jejueo-to-Korean NMT problem at the subword-level vs. the whole word-level?  \textbf{(3 pts)}
-% \begin{answer}
-% \end{answer}
-
-% \item  Here we present a series of error we found in the outputs of NMT model. For each example of a reference Korean translation and NMT Korean translation, (1) please identify the error in NMT translation, (2) provide possible reasons why the model may have made the errors, and (3) Describe \textbf{ONE} possible way to fix the observed error. ($<unk>$ refers to \textit{unknown} token) \textbf{6 pts)}
-
-% \begin{enumerate}[label=(\roman*)]
-% \item\textbf{Source Sentence: } 가운데 대가 잇주 , 가운데 . 가운데 대 놔 가지고서 이제 만들면은 그 실 고망 , 고망 안터렐이 그 불로 무시거 불깍살로 영 헤근에 불부트민 불깍살 꺼 버리면 그디 불 잇잖느냐이 ?
-%  \newline
-%  \newline 
-% \textbf{Reference Translation: } 가운데 대가 있지 , 가운데 . 가운데 대 놔 가지고서 이제 만들면 그 실 구멍 , 구멍 안으로 그 불로 무엇 성냥개비로 이렇게 해서 불붙으면 성냥개비 꺼 버리면 거기 불 있잖니 ?
-%  \newline
-%  \newline
-% \textbf{NMT Translation: }  가운데 대가 있지 , 가운데 . 가운데 대 놔 가지고서 이제 만들면 그 실 구멍 , 구멍 안터$<unk>$이 그 불로 무엇 불깍살로 이렇게 해서 불붙으면 불깍살 거 버리면 거기 불 있잖아 ?
-%  \newline
-% \begin{answer}
-% \end{answer}
-% \item\textbf{Source Sentence: } ㅎ、ㄴ 치가 얼만곤 허민 성냥쌀 ㅎ、나가 ㅎ、ㄴ 치라 .
-%  \newline
-%  \newline 
-% \textbf{Reference Translation: } 한 치가 얼마인가 하면 성냥개비 하나가 한 치야 .
-%  \newline
-%  \newline
-% \textbf{NMT Translation: }  한 치가 얼만곤 하면 성냥개 하나가 한 치라 .
-%  \newline
-% \begin{answer}
-% \end{answer}
-% \item\textbf{Source Sentence: } 여름은 나민 저 거시기 요센 말로 난닝구 닮게시리 .
-%  \newline
-%  \newline 
-% \textbf{Reference Translation: }  여름은 되면 저 거시기 요샌 말로 러닝 같게끔 .
-%  \newline
-%  \newline
-% \textbf{NMT Translation: }   여름은 나면 저 거시기 요샌 말로 $<unk>$게끔 .
-%  \newline
-% \begin{answer}
-% \end{answer}
-% \end{enumerate}
-% \item You can use dot product attention, multiplicative attention, and additive attention to calculate attention score. \textbf{(4 pts)}
-% \begin{enumerate}[label=(\roman*)]
-%     \item explain ONE advantage and disadvantage of dot product attention ($\mathbf{s}^T \mathbf{h}_i$) compared to multiplicative attention ($\mathbf{s}^T\mathbf{W}\mathbf{h}_i$).
-%     \begin{answer}
-%     \end{answer}
-%     \item explain ONE advantage and disadvantage of dot product attention ($\mathbf{s}^T \mathbf{h}_i$) compared to additive attention ($\mathbf{v}^T \tanh(\mathbf{W_1} \mathbf{h_i}+\mathbf{W_2} \mathbf{s_t})$).
-%     \begin{answer}
-%     \end{answer}
-% \end{enumerate}
-% \item BLEU score is the most commonly used automatic evaluation metric for NMT systems. It is usually calculated across the entire test set, but here we will consider BLEU defined for a single example.\footnote{This definition of sentence-level BLEU score matches the \texttt{sentence\_bleu()} function in the \texttt{nltk} Python package. Note that the NLTK function is sensitive to capitalization. In this question, all text is lowercased, so capitalization is irrelevant. \\ \url{http://www.nltk.org/api/nltk.translate.html\#nltk.translate.bleu_score.sentence_bleu}
-%     }
-%     Suppose we have a source sentence $\mathbf{s}$, a set of $k$ reference translations $\mathbf{r}_1,\dots,\mathbf{r}_k$, and a candidate translation $\mathbf{c}$. To compute the BLEU score of $\mathbf{c}$, we first compute the \textit{modified $n$-gram precision} $p_n$ of $\mathbf{c}$, for each of $n=1,2,3,4$, where $n$ is the $n$ in \href{https://en.wikipedia.org/wiki/N-gram}{n-gram}:
-%     \begin{align}
-%         p_n = \frac{ \displaystyle \sum_{\text{ngram} \in \mathbf{c}} \min \bigg( \max_{i=1,\dots,k} \text{Count}_{\mathbf{r}_i}(\text{ngram}), \enspace \text{Count}_{\mathbf{c}}(\text{ngram}) \bigg) }{\displaystyle \sum_{\text{ngram}\in \mathbf{c}} \text{Count}_{\mathbf{c}}(\text{ngram})}
-%     \end{align}
-%      Here, for each of the $n$-grams that appear in the candidate translation $\mathbf{c}$, we count the maximum number of times it appears in any one reference translation, capped by the number of times it appears in $\mathbf{c}$ (this is the numerator). We divide this by the number of $n$-grams in $\mathbf{c}$ (denominator). \newline 
-
-%     Next, we compute the \textit{brevity penalty} BP. Let $len(c)$ be the length of $\mathbf{c}$ and let $len(r)$ be the length of the reference translation that is closest to $len(c)$ (in the case of two equally-close reference translation lengths, choose $len(r)$ as the shorter one). 
-%     \begin{align}
-%         BP = 
-%         \begin{cases}
-%             1 & \text{if } len(c) \ge len(r) \\
-%             \exp \big( 1 - \frac{len(r)}{len(c)} \big) & \text{otherwise}
-%         \end{cases}
-%     \end{align}
-%     Lastly, the BLEU score for candidate $\mathbf{c}$ with respect to $\mathbf{r}_1,\dots,\mathbf{r}_k$ is:
-%     \begin{align}
-%         BLEU = BP \times \exp \Big( \sum_{n=1}^4 \lambda_n \log p_n \Big)
-%     \end{align}
-%     where $\lambda_1,\lambda_2,\lambda_3,\lambda_4$ are weights that sum to 1. The $\log$ here is natural log.
-%     \newline
-%     \begin{enumerate}[label=(\roman*)]
-%         \item Consider this example.
-%         \begin{itemize}
-% \item        Source Sentence $\mathbf{s}$: \textbf{그때는 뭐 사먹을 것도 엇일 때고 주로 뭐 학습장이나 작기장이나 사던지 그렇게 헤엇던 거 가따} 
-%       \item  Reference Translation $\mathbf{r}_1$: 그때는 뭐 사먹을 것도 없을 때고 주로 뭐 학습장이나 종합장이나 사던지 그렇게 했었던 거 같아 
-%         \item Reference Translation $\mathbf{r}_2$: 그때는 뭐 사먹을 것도 없을 시절이고 주로 뭐 학습장이나 잡기장이나 사든지 그렇게 했었던 거 같다 
-%         \item NMT Translation $\mathbf{c}_1$: 그때는 뭐 사먹을 것도 없을 때고 주로 뭐 학습장이나 작기장이나 사든지 그렇게 했었던 거 가
-%     \end{itemize}
-
-%     Please compute the BLEU scores for $\mathbf{c}_1$. Let $\lambda_i=0.5$ for $i\in\{1,2\}$ and $\lambda_i=0$ for $i\in\{3,4\}$ (\textbf{this means we ignore 3-grams and 4-grams}, i.e., don't compute $p_3$ or $p_4$). When computing BLEU scores, show your working (i.e., show your computed values for $p_1$, $p_2$, $len(c)$, $len(r)$ and $BP$). Note that the BLEU scores can be expressed between 0 and 1 or between 0 and 100. The code is using the 0 to 100 scale while in this question we are using the \textbf{0 to 1} scale. \textbf{(6 pts)}
-%     \begin{answer}
-%     \end{answer}
-%     \item Due to data availability, NMT systems are often evaluated with respect to only a single reference translation. Please explain (in a few sentences) why this may be problematic. In your explanation, discuss how the BLEU score metric assesses the quality of NMT translations when there are multiple reference transitions versus a single reference translation. \textbf{(3 pts)}
-%     \begin{answer}
-%     \end{answer}
-%     \item \textbf{(BONUS)} List ONE advantage and disadvantage of BLEU, compared to human evaluation, as an evaluation metric for Machine Translation. \textbf{(3 pts)}
-%     \begin{answer}
-%     \end{answer}
-%     \end{enumerate}
-% \end{enumerate}
 \end{document}

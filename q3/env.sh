@@ -1,9 +1,7 @@
-conda create -n a3q3
-source ~/anaconda3/etc/profile.d/conda.sh
-conda activate a3q3
 conda install pytorch==1.11.0 torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
-conda install -c pytorch torchtext==0.9.0
-conda install -c conda-forge spacy
+conda install -c pytorch torchtext
+pip install -U pip setuptools wheel
+pip install -U spacy
 python -m spacy download en_core_web_sm
 conda install pillow=6.2.1
 conda install numpy 
