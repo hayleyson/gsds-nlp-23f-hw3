@@ -165,12 +165,12 @@ def question_1c_sanity_check(model, src_sents, tgt_sents, vocab):
     input = torch.randn(2, model.embed_size)
     hidden = torch.randn(model.hidden_size)
     cell = torch.randn(model.hidden_size)
-    torch_model=nn.LSTMCell(input_size=model.embed_size, hidden_size=model.hidden_size, bias=True)
+    torch_model=nn.LSTMCell(input_size=model.embed_size+model.hidden_size, hidden_size=model.hidden_size, bias=True)
     reinitialize_layers(model)
     reinitialize_layers(torch_model)
 
-    model_results=model.decoder.forward(Ybar_t[:,:int(Ybar_t.shape[1]-enc_hiddens.shape[2]/2)], dec_init_state)
-    torch_results=torch_model(Ybar_t[:,:int(Ybar_t.shape[1]-enc_hiddens.shape[2]/2)], dec_init_state)
+    model_results=model.decoder.forward(Ybar_t, dec_init_state)
+    torch_results=torch_model(Ybar_t, dec_init_state)
     # with torch.no_grad():
     #     dec_state_pred, o_t_pred, e_t_pred= model.step(Ybar_t, dec_init_state, enc_hiddens, enc_hiddens_proj, enc_masks)
     assert(model_results[0].shape == torch_results[0].shape), "decoder_state[0] shape is incorrect: it should be:\n {} but is:\n{}".format(model_results[0].shape, torch_results[0].shape)
